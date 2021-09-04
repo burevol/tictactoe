@@ -28,7 +28,6 @@ def check_free_zone(x, y):
         return False
 
 
-
 def player_turn(x, y, symbol):
     if check_correct_coord(x, y) and check_free_zone(x, y):
         field[x][y] = symbol
@@ -51,19 +50,41 @@ def do_turn(message, symbol):
     enter_coord(symbol)
 
 
+def has_line(symbol):
+    horizontal = {}
+    vertical = {}
+    for turn in turns[symbol]:
+        if turn[0] in horizontal:
+            horizontal[turn[0]] += 1
+        else:
+            horizontal[turn[0]] = 1
+
+        if turn[1] in vertical:
+            vertical[turn[1]] += 1
+        else:
+            vertical[turn[1]] = 1
+
+    if 3 in horizontal.values() or 3 in vertical.values():
+        return True
+
+    return False
+
+
 def check_win(message, symbol):
     if len(turns[CROSS]) + len(turns[NOUGHT]) == 9:
         print('Не осталось свободных клеток. Ничья!')
+        return True
+    if has_line(symbol):
+        draw_field()
+        print(message)
         return True
     return False
 
 
 while True:
     do_turn('Ход первого игрока. Введите координаты через пробел.', CROSS)
-    if check_win(CROSS):
-        print("Первый игрок выиграл!")
+    if check_win('Первый игрок выиграл!', CROSS):
         break
     do_turn('Ход второго игрока. Введите координаты через пробел.', NOUGHT)
-    if check_win(NOUGHT):
-        print("Второй игрок выиграл!")
+    if check_win('Второй игрок выиграл!', NOUGHT):
         break
