@@ -4,7 +4,7 @@ VOID = '-'
 
 field = [[VOID for j in range(0, 3)] for i in range(0, 3)]
 turns = {CROSS: [], NOUGHT: []}
-players = {CROSS:'первый', NOUGHT:'второй'}
+players = {CROSS: 'первый', NOUGHT: 'второй'}
 
 
 def draw_field():
@@ -95,10 +95,10 @@ def check_win(message, symbol):
     return False
 
 
+current_player = CROSS
+
 while True:
-    do_turn('Ход первого игрока. Введите координаты через пробел.', CROSS)
-    if check_win('Первый игрок выиграл!', CROSS):
+    do_turn(f'Ходит {players[current_player]} игрок. Введите координаты через пробел.', current_player)
+    if check_win(f'{players[current_player].capitalize()} игрок выиграл!', current_player):
         break
-    do_turn('Ход второго игрока. Введите координаты через пробел.', NOUGHT)
-    if check_win('Второй игрок выиграл!', NOUGHT):
-        break
+    current_player = NOUGHT if current_player == CROSS else CROSS
