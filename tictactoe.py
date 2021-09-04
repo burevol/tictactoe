@@ -43,21 +43,23 @@ def enter_coord(symbol):
         if player_turn(x, y, symbol):
             break
 
-def do_turn()
+
+def do_turn(message, symbol):
+    draw_field()
+    print(message)
+    enter_coord(symbol)
+
 
 def check_win(symbol):
     return False
 
 
 while True:
-    draw_field()
-    print('Ход первого игрока. Введите координаты через пробел.')
-    enter_coord(CROSS)
+    do_turn('Ход первого игрока. Введите координаты через пробел.', CROSS)
     if check_win(CROSS):
         print("Первый игрок выиграл!")
         break
-    draw_field()
-    print('Ход второго игрока. Введите координаты через пробел.')
-    enter_coord(NOUGHT)
+    do_turn('Ход второго игрока. Введите координаты через пробел.', NOUGHT)
     if check_win(NOUGHT):
         print("Второй игрок выиграл!")
+        break
