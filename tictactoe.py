@@ -4,6 +4,7 @@ VOID = '-'
 
 field = [[VOID for j in range(0, 3)] for i in range(0, 3)]
 turns = {CROSS: [], NOUGHT: []}
+players = {CROSS:'первый', NOUGHT:'второй'}
 
 
 def draw_field():
@@ -53,6 +54,10 @@ def do_turn(message, symbol):
 def has_line(symbol):
     horizontal = {}
     vertical = {}
+
+    diagonal1 = 0
+    diagonal2 = 0
+
     for turn in turns[symbol]:
         if turn[0] in horizontal:
             horizontal[turn[0]] += 1
@@ -64,7 +69,15 @@ def has_line(symbol):
         else:
             vertical[turn[1]] = 1
 
+        if turn[0] == turn[1]:
+            diagonal1 += 1
+
+        if turn[0] + turn[1] == 2:
+            diagonal2 += 1
+
     if 3 in horizontal.values() or 3 in vertical.values():
+        return True
+    elif diagonal1 == 3 or diagonal2 == 3:
         return True
 
     return False
@@ -72,6 +85,7 @@ def has_line(symbol):
 
 def check_win(message, symbol):
     if len(turns[CROSS]) + len(turns[NOUGHT]) == 9:
+        draw_field()
         print('Не осталось свободных клеток. Ничья!')
         return True
     if has_line(symbol):
