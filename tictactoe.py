@@ -21,11 +21,12 @@ def check_correct_coord(x, y):
 
 
 def check_free_zone(x, y):
-    if not field[x][y] == VOID:
+    if field[x][y] == VOID:
+        return True
+    else:
         print("Неверный ход. Ячейка уже занята. Повторите ввод.")
         return False
-    else:
-        return True
+
 
 
 def player_turn(x, y, symbol):
@@ -50,7 +51,10 @@ def do_turn(message, symbol):
     enter_coord(symbol)
 
 
-def check_win(symbol):
+def check_win(message, symbol):
+    if len(turns[CROSS]) + len(turns[NOUGHT]) == 9:
+        print('Не осталось свободных клеток. Ничья!')
+        return True
     return False
 
 
