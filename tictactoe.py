@@ -46,7 +46,6 @@ def enter_coord(symbol):
 
 
 def do_turn(message, symbol):
-    draw_field()
     print(message)
     enter_coord(symbol)
 
@@ -85,11 +84,9 @@ def has_line(symbol):
 
 def check_win(message, symbol):
     if len(turns[CROSS]) + len(turns[NOUGHT]) == 9:
-        draw_field()
         print('Не осталось свободных клеток. Ничья!')
         return True
     if has_line(symbol):
-        draw_field()
         print(message)
         return True
     return False
@@ -98,7 +95,9 @@ def check_win(message, symbol):
 current_player = CROSS
 
 while True:
+    draw_field()
     do_turn(f'Ходит {players[current_player]} игрок. Введите координаты через пробел.', current_player)
     if check_win(f'{players[current_player].capitalize()} игрок выиграл!', current_player):
+        draw_field()
         break
     current_player = NOUGHT if current_player == CROSS else CROSS
